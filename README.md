@@ -1,5 +1,5 @@
-EQUIPO: Miniones
+**EQUIPO: Miniones**
 
-Renata Feregrino Mesinas
-Miguel Ángel Márquez Cristoval
-Antonio Soria Gamarra
+* Renata Feregrino Mesinas
+* Miguel Ángel Márquez
+* Cristoval Antonio Soria Gamarra
