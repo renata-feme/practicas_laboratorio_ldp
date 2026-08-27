@@ -40,14 +40,14 @@ tokens :-
   \*                    {\_ -> TokenMul}
   \/                    {\_ -> TokenDiv}
   expt                  {\_ -> TokenExpt}
-  \<                    {\_ -> TokenMenorQue}
-  \>                    {\_ -> TokenMayorQue}
-  "<="                  {\_ -> TokenMenorIgual}
-  ">="                  {\_ -> TokenMayorIgual}
-  eq                    {\_ -> TokenIgual}
+  \<                    {\_ -> TokenLT}
+  \>                    {\_ -> TokenGT}
+  "<="                  {\_ -> TokenLE}
+  ">="                  {\_ -> TokenGE}
+  eq                    {\_ -> TokenEq}
   "add1"                {\_ -> TokenAdd1}
-  "sub1"                {\_ -> TokenRestaUno}
-  zero                  {\_ -> TokenCero}
+  "sub1"                {\_ -> TokenSub1}
+  "zero?"               {\_ -> TokenZeroP}
 
 
   .                     { \s -> error ("Lexical error: caracter no reconocido = "
