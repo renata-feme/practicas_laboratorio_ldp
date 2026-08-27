@@ -34,24 +34,6 @@ import Lexer (Token(..), lexer)
 
 ASA : nat                      { Num $1 }
     | bool                     { Boolean $1 }
-    | '(' "not" ASA ')'        {Not $3}
-    | '(' "add1" ASA ')'       { Add1 $3}
-    | '(' "sub1" ASA ')'       { Sub1 $3}
-    | '(' "zero?" ASA ')'      {ZeroP $3}
-
-    | '(' "expt" ASA ASA ')'   {Expt $3 $4}
-    | '(' "eq" ASA ASA ')'     {EqP $3 $4}
-
-    | '(' '-' lista_dos ')'    {Sub $3}
-    | '(' '+' lista_dos ')'    {Add $3}
-    | '(' "and" lista_dos ')'  {And $3}
-    | '(' "or" lista_dos ')'   {Or $3}
-    | '(' '*' lista_dos ')'    {Mul $3}
-    | '(' '/' lista_dos ')'    {Div $3}
-    | '(' '<' lista_dos ')'    {Lt $3}
-    | '(' '>' lista_dos ')'    {Gt $3}
-    | '(' "<=" lista_dos ')'   {Le $3}
-    | '(' ">=" lista_dos ')'   {Ge $3}
 
 -- RETO 2:
 -- Agrega las producciones para:
@@ -59,14 +41,28 @@ ASA : nat                      { Num $1 }
 --   * operadores estrictamente binarios: expt y eq;
 --   * operadores unarios: not, add1, sub1, zero?.
 
-
+ASA : '(' "add1" ASA ')'      {Add1 $3}  
+    | '(' "sub1" ASA ')'  {Sub1 $3}
+    | '(' "zero?" ASA ')'  { ZeroP $3}
+    | '(' "not" ASA ')'  { Not $3}
+    | '(' "expt" ASA ASA ')'  { Expt $3 $4}
+    | '(' "eq" ASA ASA ')'  { EqP $3 $4}
+    | '(' '-' Lista ')'  { Sub $3}
+    |'(' '+' Lista ')'  { Add $3}
+    |'(' '*' Lista ')'  { Mul $3}
+    | '(' '/' Lista ')'  { Div $3}
+    | '(' "and" Lista ')'  { And $3}
+    | '(' "or" Lista ')'  { Or $3}
+    | '(' '<' Lista ')'  { Lt $3}
+    | '(' '>' Lista ')'  { Gt $3}
+    | '(' "<=" Lista ')'  { Le $3}
+    | '(' ">=" Lista ')'  { Ge $3}
 
 -- RETO 3:
 -- Agrega un no terminal para representar dos o mas argumentos.
 -- El resultado debe ser una lista de ASA.
-
-lista_dos : ASA ASA       {[$1 ,$2]}
-  | ASA lista_dos         {$1 : $2}
+Lista : ASA ASA { [ $1 , $2 ]}
+      | Lista ASA { $1 ++ [ $2]}
 
 {
 parseError :: [Token] -> a
