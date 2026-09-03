@@ -51,7 +51,7 @@ tokens :-
   --   let, let* e identificadores.
 
   let                   { \_ -> TokenLet}
-  "let*"                {\_ -> Tokenstar}
+  "let*"                {\_ -> TokenLetStar}
   @var                  {\s -> TokenId( read s)}
 
   .                     { \s -> error ("Lexical error: caracter no reconocido = "

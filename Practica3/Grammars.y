@@ -45,7 +45,7 @@ ASA : nat                           { Num $1 }
     | '(' "or" Args ')'             { Or $3 }
     | '(' '<' Args ')'              { Lt $3 }
     | '(' '>' Args ')'              { Gt $3 }
-    | '(' "<=" Args ')'             { Le $3 }
+    | '(' "<=" Args ')'             { Le $3 }x
     | '(' ">=" Args ')'             { Ge $3 }
     | '(' "expt" ASA ASA ')'        { Expt $3 $4 }
     | '(' "eq" ASA ASA ')'          { EqP $3 $4 }
@@ -63,11 +63,12 @@ ASA : nat                           { Num $1 }
 
     | var                           {Id $1}
     | '(' "let" '(' Bindings ')' ASA ')'    {Let $4 $6}
+    | '(' "let*" '(' Bindings ')' ASA ')'    {LetStar $4 $6}
 
 Args : ASA ASA                       { [$1, $2] }
      | ASA Args                      { $1 : $2 }
 
-Binding : (var ASA)                    { ($1, $2)}
+Binding : '(' var ASA ')'                    { ($2, $3)}
 
 Bindings : Binding                     {[$1]}
           |  Binding Bindings          {$1 : $2}
