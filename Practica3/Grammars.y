@@ -61,10 +61,18 @@ ASA : nat                           { Num $1 }
 --   * let* con una o mas asociaciones;
 --   * los no terminales Bindings y Binding.
 
+    | var                           {Id $1}
+    | '(' "let" '(' Bindings ')' ASA ')'    {Let $4 $6}
+
 Args : ASA ASA                       { [$1, $2] }
      | ASA Args                      { $1 : $2 }
 
-{
+Binding : (var ASA)                    { ($1, $2)}
+
+Bindings : Binding                     {[$1]}
+          |  Binding Bindings          {$1 : $2}
+
+{ 
 parseError :: [Token] -> a
 parseError toks = error ("Parse error: " ++ show toks)
 
