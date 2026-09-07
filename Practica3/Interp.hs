@@ -79,3 +79,54 @@ namesListas (x:xs) = names x ++ namesListas xs
 namesDeBindings :: [Binding] -> [String]
 namesDeBindings [] = []
 namesDeBindings ((a,b) : cola ) = names b ++ namesDeBindings cola
+
+
+freshName :: [String] -> String
+freshName varsUsadas = checaNombreNuevo 0 varsUsadas
+
+checaNombreNuevo :: Int -> [String] -> String
+checaNombreNuevo n varsUsadas
+  | elem ("x" ++ show n) varsUsadas = checaNombreNuevo (n + 1) varsUsadas
+  |otherwise = "x" ++ show n
+
+
+
+
+sust :: ASA -> String -> ASA -> ASA
+sust (Num n) x s = (Num n)
+sust (Boolean b) x s = (Boolean b)
+sust (Id y) x s
+  |(y == x) = s
+  | otherwise = (Id y)
+sust (Not e) x s = Not (sust e x s)
+sust (Add1 e) x s = Add1 (sust e x s)
+sust (Sub1 e) x s = Sub1 (sust e x s)
+sust (ZeroP e) x s = ZeroP (sust e x s)
+sust (Expt e1 e2) x s = Expt (sust e1 x s) (sust e2 x s)
+sust (EqP e1 e2) x s  = EqP (sust e1 x s) (sust e2 x s)
+sust (And e) x s = And (sustListas e x s)
+sust (Or e) x s = Or (sustListas e x s)
+sust (Add e) x s= Add (sustListas e x s)
+sust (Sub e) x s = Sub (sustListas e x s)
+sust (Mul e) x s = Mul (sustListas e x s)
+sust (Div e) x s = Div (sustListas e x s)
+sust (Lt e) x s = Lt (sustListas e x s)
+sust (Gt e) x s = Gt (sustListas e x s)
+sust (Le e) x s= Le (sustListas e x s)
+sust (Ge e) x s = Ge (sustListas e x s)
+sust (Let e1 e2) x s
+  -- Caso 1
+  | elem x (varDeBindings e1) = Let (sustBindings e1 x s) e2
+  -- Caso 2
+  | 
+  -- Caso 3:
+  | 
+
+sustListas :: [ASA] -> String -> ASA -> [ASA]
+sustListas [] x s = []
+sustListas (e : cola) x s = sust e x s : sustListas cola x s
+
+
+sustBindings :: [Binding] -> String -> ASA -> [Binding]
+sustBindings [] x s = []
+sustBindings ((y, ex): cola) x s  = (y, sust ex x s) : sustBindings cola x s
