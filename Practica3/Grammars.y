@@ -45,7 +45,7 @@ ASA : nat                           { Num $1 }
     | '(' "or" Args ')'             { Or $3 }
     | '(' '<' Args ')'              { Lt $3 }
     | '(' '>' Args ')'              { Gt $3 }
-    | '(' "<=" Args ')'             { Le $3 }x
+    | '(' "<=" Args ')'             { Le $3 }
     | '(' ">=" Args ')'             { Ge $3 }
     | '(' "expt" ASA ASA ')'        { Expt $3 $4 }
     | '(' "eq" ASA ASA ')'          { EqP $3 $4 }

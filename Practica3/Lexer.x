@@ -13,7 +13,7 @@ $letter = [A-Za-z_]
 $idrest = [A-Za-z0-9_]
 
 @nat = 0 | $nonzero $digit*
-@var = $letter $idrest
+@var = $letter $idrest*
 
 tokens :-
 
@@ -52,7 +52,7 @@ tokens :-
 
   let                   { \_ -> TokenLet}
   "let*"                {\_ -> TokenLetStar}
-  @var                  {\s -> TokenId( read s)}
+  @var                  {\s -> TokenId s}
 
   .                     { \s -> error ("Lexical error: caracter no reconocido = "
                                       ++ show s
